@@ -1,9 +1,1 @@
 # Express App Template
-
-
-
-## Drizzle
-
-```
-
-```

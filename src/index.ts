@@ -2,8 +2,7 @@ import compression from "compression";
 import express, { NextFunction, Request, Response } from "express";
 import helmet from "helmet";
 import morgan from "morgan";
-import routes from "./api";
-import { dbUrl, jwtSecretKey, port, prefix } from "./config";
+import { jwtSecretKey, port } from "./config";
 import limitter from "./config/rate-limitter";
 
 // create an express app.
@@ -21,9 +20,6 @@ const app = express();
 // check if jwtSecretKey is defined.
 if (!jwtSecretKey) {
   console.error("FATAL ERROR: jwtSecretKey is not defined.");
-}
-if (!dbUrl) {
-  console.error("FATAL ERROR: dbUrl is not defined.");
 }
 
 // Middlewares
@@ -47,7 +43,9 @@ app.use(express.static("public"));
 app.use(limitter);
 
 // Routes
-app.use(prefix, routes);
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
 
 // 404 route.
 app.use((req, res, next) => {
