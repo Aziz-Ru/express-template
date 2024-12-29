@@ -2,9 +2,9 @@ import compression from "compression";
 import express, { NextFunction, Request, Response } from "express";
 import helmet from "helmet";
 import morgan from "morgan";
-import { jwtSecretKey, port } from "./config";
+import routes from "./api/index";
+import { jwtSecretKey, port, prefix } from "./config";
 import limitter from "./config/rate-limitter";
-
 // create an express app.
 const app = express();
 
@@ -43,9 +43,7 @@ app.use(express.static("public"));
 app.use(limitter);
 
 // Routes
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
+app.use(prefix, routes);
 
 // 404 route.
 app.use((req, res, next) => {

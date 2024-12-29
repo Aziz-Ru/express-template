@@ -1,3 +1,4 @@
+import exp from "constants";
 import { config } from "dotenv";
 
 config();
@@ -15,3 +16,4 @@ export const jwtSecretKey = JWT_SECRET_KEY;
 export const refreshTokenSecretKey = REFRESH_TOKEN_SECRET_KEY;
 export const dbUrl = DB_URL;
 export const maximumRateLimit = MAX_RATE_LIMIT || 1000;
+export const prefix = "/api/v1";
