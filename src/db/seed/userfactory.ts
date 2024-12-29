@@ -1,7 +1,6 @@
-
 import { faker } from "@faker-js/faker";
 import db from "../index";
-import { user } from "../schema/index";
+import user from "../schema/user";
 
 const userFactory = async (count: number) => {
   try {

@@ -4,9 +4,9 @@
     "module": "CommonJS",
     "rootDir": "./src",
     // "baseUrl": "./",
-    "paths": {
-      "@": ["./src/*"]
-    },
+    // "paths": {
+    //   "@": ["./src/*"]
+    // },
     "outDir": "./dist",
     "esModuleInterop": true,
     "strict": true,
