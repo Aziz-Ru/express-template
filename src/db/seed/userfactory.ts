@@ -1,10 +1,12 @@
 import { faker } from "@faker-js/faker";
+import db from "../index";
+import user from "../schema/user";
 
 const userFactory = async (count: number) => {
   try {
     const fakeusers = [];
     for (let i = 0; i < count; i++) {
-      const user = {
+      const fuser = {
         uid: faker.string.uuid(),
         email: faker.internet.email(),
         password: faker.internet.password(),
@@ -20,15 +22,15 @@ const userFactory = async (count: number) => {
         gender: faker.helpers.arrayElement(["MALE", "FEMALE"]),
         platform: faker.helpers.arrayElement(["WEB", "ANDROID", "IOS"]),
         lastSignedInAt: faker.date.recent(),
-        createdAt: faker.date.recent(),
-        updatedAt: faker.date.recent(),
       };
-      fakeusers.push(user);
+      fakeusers.push(fuser);
     }
-    // await db.insert(user).values(fakeusers);
+    await db.insert(user).values(fakeusers);
+    console.log("Users seeded successfully.");
     process.exit(0);
   } catch (error) {
-    console.error(error);
+    console.error("Error seeding users: ", error);
+
     process.exit(1);
   }
 };
