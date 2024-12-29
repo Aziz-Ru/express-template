@@ -1,6 +1,4 @@
 import { faker } from "@faker-js/faker";
-import db from "../index";
-import user from "../schema/user";
 
 const userFactory = async (count: number) => {
   try {
@@ -27,7 +25,7 @@ const userFactory = async (count: number) => {
       };
       fakeusers.push(user);
     }
-    await db.insert(user).values(fakeusers);
+    // await db.insert(user).values(fakeusers);
     process.exit(0);
   } catch (error) {
     console.error(error);
