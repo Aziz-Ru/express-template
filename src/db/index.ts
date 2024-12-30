@@ -4,6 +4,6 @@ import { dbUrl } from "../config/index";
 
 const connection = postgres(dbUrl!);
 
-const db = drizzle(connection, { logger: true });
+const db = drizzle(connection, { logger: false });
 
 export default db;
