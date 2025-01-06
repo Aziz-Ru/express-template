@@ -1,8 +1,8 @@
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
-import { dbUrl } from "../config/index";
+import env from "../config/env";
 
-const connection = postgres(dbUrl!);
+const connection = postgres(env.DB_URL);
 
 const db = drizzle(connection, { logger: false });
 

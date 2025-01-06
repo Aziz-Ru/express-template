@@ -1,8 +1,9 @@
 import rateLimit from "express-rate-limit";
-import { maximumRateLimit } from ".";
+import env from "./env";
+
 const limitter = rateLimit({
-  windowMs: 10 * 60 * 1000,
-  max: parseInt(maximumRateLimit as string),
+  windowMs: env.RATE_LIMITER_WINDOW,
+  max: env.RATE_LIMITER_MAX,
   message: { msg: "Too many requests, please try again later." },
   statusCode: 429,
   headers: true,
