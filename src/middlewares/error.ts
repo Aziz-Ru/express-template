@@ -15,9 +15,15 @@ export const errorConverter = (
     const statusCode = error.statusCode || htttpStatus.INTERNAL_SERVER_ERROR;
     const message =
       error.message || htttpStatus[htttpStatus.INTERNAL_SERVER_ERROR];
-    error = new ApiError(statusCode, message, false, error.stack);
+    error = new ApiError(
+      statusCode,
+      message,
+      [{ field: "server", message: "Internal Server Error" }],
+      false,
+      error.stack
+    );
   }
-  console.log("Error Convert");
+
   next(error);
 };
 
@@ -28,19 +34,20 @@ export const errorHandler = (
   res: Response,
   next: NextFunction
 ) => {
-  let { statusCode, message } = err;
-  console.log(statusCode, message);
+  let { statusCode, message, details } = err;
   if (env.NODE_ENV == "production" && !err.isOperational) {
     statusCode = htttpStatus.INTERNAL_SERVER_ERROR;
     message = "Internal server error";
   }
 
   //   res.locals.errorMessage = err.message;
-  const errors = [
-    {
-      code: statusCode,
-      message,
-    },
-  ];
+  const errors: any = {
+    code: statusCode,
+    message,
+  };
+  if (details) {
+    errors["details"] = details;
+  }
+
   res.status(statusCode).json({ errors });
 };

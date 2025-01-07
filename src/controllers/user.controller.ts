@@ -6,3 +6,7 @@ import catchAsync from "../utils/catchAsync";
 export const getUsers = catchAsync(async (req: Request, res: Response) => {
   throw new ApiError(httpStatus.BAD_REQUEST, "Invalid password");
 });
+
+export const createUser = catchAsync(async (req: Request, res: Response) => {
+  res.send("User created successfully");
+});
