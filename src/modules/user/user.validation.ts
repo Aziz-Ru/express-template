@@ -1,19 +1,8 @@
 import { z } from "zod";
+import { userValidationModel } from "./user.moder";
 
 export const createUser = {
-  body: z.object({
-    email: z
-      .string({
-        message: "Email is required",
-      })
-      .email(),
-    password: z
-      .string({
-        message: "Password is required",
-      })
-      .min(6)
-      .max(128),
-  }),
+  body: userValidationModel,
 };
 
 export const getUser = {
@@ -25,7 +14,6 @@ export const getUser = {
 export const getUsers = {
   query: z.object({
     name: z.string().optional(),
-    role: z.string().optional(),
     sortBy: z.string().optional(),
     limit: z.string().optional(),
     page: z.string().optional(),

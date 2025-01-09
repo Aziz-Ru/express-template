@@ -4,12 +4,11 @@ import express, { NextFunction, Request, Response } from "express";
 import helmet from "helmet";
 import httpStatus from "http-status";
 import morgan from "morgan";
+import routes from "./app";
 import env from "./config/env";
 import limitter from "./config/rate-limitter";
 import { errorConverter, errorHandler } from "./middlewares/error";
-import routes from "./routes/index";
 import ApiError from "./utils/ApiError";
-
 // create an express app.
 const app = express();
 
