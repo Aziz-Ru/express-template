@@ -5,11 +5,11 @@ import catchAsync from "../../utils/catchAsync";
 import * as userService from "./user.service";
 
 export const getUsers = catchAsync(async (req: Request, res: Response) => {
-  throw new ApiError(httpStatus.BAD_REQUEST, "Invalid password");
+  const users = await userService.getUsers();
+  return res.status(200).json(users);
 });
 
 export const createUser = catchAsync(async (req: Request, res: Response) => {
-  
   if (await userService.getUserByEmail(req.body.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, "Email already exists");
   }

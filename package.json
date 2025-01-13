@@ -5,8 +5,7 @@
   "scripts": {
     "start": "node dist/index.js",
     "build": "tsc",
-    "dev": "ts-node src/index.ts",
-    "devrun": "node --import=tsx --watch src/index.ts",
+    "dev": "node --import=tsx --watch src/index.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:seed": "ts-node ./src/db/seed/index.ts"
@@ -17,6 +16,7 @@
   "description": "",
   "dependencies": {
     "@faker-js/faker": "^9.3.0",
+    "@types/pg": "^8.11.10",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.5",
     "cors": "^2.8.5",
@@ -28,7 +28,7 @@
     "http-status": "^2.1.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
-    "postgres": "^3.4.5",
+    "pg": "^8.13.1",
     "xss": "^1.0.15",
     "zod": "^3.24.1"
   },

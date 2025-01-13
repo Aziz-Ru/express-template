@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import db from "../index";
-import user from "../schema/user";
+import { userSchema } from "../schema/userSchema";
 
 const userFactory = async (count: number) => {
   try {
@@ -10,8 +10,6 @@ const userFactory = async (count: number) => {
         uid: faker.string.uuid(),
         email: faker.internet.email(),
         password: faker.internet.password(),
-        phoneNumber: faker.phone.number({ style: "national" }).substring(0, 11),
-        phoneVerified: faker.datatype.boolean(),
         emailVerified: faker.datatype.boolean(),
         confirmationCode: faker.string.numeric({ length: 6 }),
         confirmationCodeSentAt: faker.date.recent(),
@@ -25,7 +23,7 @@ const userFactory = async (count: number) => {
       };
       fakeusers.push(fuser);
     }
-    await db.insert(user).values(fakeusers);
+    await db.insert(userSchema).values(fakeusers);
     console.log("Users seeded successfully.");
     process.exit(0);
   } catch (error) {

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { userValidationModel } from "./user.moder";
+import { userValidationModel } from "./user.model";
 
 export const createUser = {
   body: userValidationModel,
