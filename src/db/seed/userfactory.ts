@@ -28,7 +28,6 @@ const userFactory = async (count: number) => {
     process.exit(0);
   } catch (error) {
     console.error("Error seeding users: ", error);
-
     process.exit(1);
   }
 };

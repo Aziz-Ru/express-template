@@ -14,21 +14,18 @@ export const userValidationModel = z.object({
     })
     .min(6, { message: "Password must be at least 6 characters long" })
     .max(128, { message: "Password must be at most 128 characters long" }),
-  phoneNumber: z
-    .string({
-      message: "Phone number is required",
-    })
-    .refine(
-      (value: string) => {
-        const phoneRegex = /^[0-9]{11}$/;
-        return phoneRegex.test(value);
-      },
-      { message: "Invalid phone number" }
-    ),
+
   gender: z.enum(["MALE", "FEMALE"], { message: "Invalid Gender" }),
   platform: z.enum(["WEB", "ANDROID", "IOS"], { message: "Invalid Platform" }),
-  photoUrl: z.string().optional(),
-  deviceId: z.string().optional(),
+  photoUrl: z
+    .string()
+    .url({
+      message: "Invalid URL",
+    })
+    .optional(),
+  deviceId: z.string({
+    message: "Device ID is required",
+  }),
 });
 
 export type userModel = z.infer<typeof userValidationModel>;

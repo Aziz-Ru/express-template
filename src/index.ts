@@ -2,6 +2,7 @@ import compression from "compression";
 import cors from "cors";
 import express, { NextFunction, Request, Response } from "express";
 import helmet from "helmet";
+import { createServer } from "http";
 import httpStatus from "http-status";
 import morgan from "morgan";
 import routes from "./app";
@@ -11,6 +12,8 @@ import { errorConverter, errorHandler } from "./middlewares/error";
 import ApiError from "./utils/ApiError";
 // create an express app.
 const app = express();
+
+const server = createServer(app);
 
 // Middlewares
 // parsing incoming requests with JSON payload.
@@ -55,6 +58,6 @@ app.use(errorConverter);
 app.use(errorHandler);
 
 // start the server.
-app.listen(env.PORT, () => {
+server.listen(env.PORT, () => {
   console.log(`Server is running on port ${env.PORT}`);
 });
