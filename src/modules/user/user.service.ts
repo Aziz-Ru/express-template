@@ -3,7 +3,7 @@ import { eq } from "drizzle-orm";
 import { Request } from "express";
 import { v4 as uuid } from "uuid";
 import db from "../../db";
-import { userSchema, userView } from "../../db/schema/userSchema";
+import { userSchema, userView } from "../../db/schema/user";
 import ApiError from "../../utils/ApiError";
 export const getUsers = async () => {
   return await db.select().from(userView);
