@@ -22,3 +22,11 @@ export const register = catchAsync(async (req: Request, res: Response) => {
     message: "User Created Successfully",
   });
 });
+
+export const logout = async (req: Request, res: Response) => {
+  await AuthService.logout(req.cookies.token);
+  res.clearCookie("token").status(200).json({
+    code: 200,
+    message: "Logout Successfully",
+  });
+};

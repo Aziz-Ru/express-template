@@ -1,4 +1,5 @@
 import compression from "compression";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { NextFunction, Request, Response } from "express";
 import helmet from "helmet";
@@ -28,6 +29,7 @@ app.use(compression());
 // securing the app by setting various HTTP headers.
 app.use(helmet());
 
+app.use(cookieParser(env.JWT_SECRET_KEY));
 // enabling cors.
 app.use(
   cors({
