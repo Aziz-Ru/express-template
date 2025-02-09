@@ -6,10 +6,10 @@ import helmet from "helmet";
 import { createServer } from "http";
 import httpStatus from "http-status";
 import morgan from "morgan";
-import routes from "./app";
 import env from "./config/env";
 import limitter from "./config/rate-limitter";
 import { errorConverter, errorHandler } from "./middlewares/error";
+import routes from "./route";
 import ApiError from "./utils/ApiError";
 // create an express app.
 const app = express();
@@ -35,6 +35,8 @@ app.use(
   cors({
     origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
   })
 );
 

@@ -5,7 +5,7 @@ import status from "http-status";
 import jwt from "jsonwebtoken";
 import env from "../../config/env";
 import db from "../../db";
-import { userSchema } from "../../db/schema/user";
+import { userSchema } from "../../db/schema/admin";
 import ApiError from "../../utils/ApiError";
 import { createUser, getUserByEmail } from "../user/user.service";
 
