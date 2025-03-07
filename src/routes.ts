@@ -1,36 +1,44 @@
 import { Router } from "express";
-import fs from "fs";
-import path from "path";
+import "reflect-metadata";
+import DemoController from "./modules/demo/routes";
 const router = Router();
 
-const registerRoutes = async () => {
-  try {
-    const modulesPath = path.join(__dirname, "modules");
-    const modules = fs.readdirSync(modulesPath);
+router.use(DemoController);
 
-    for (const module of modules) {
-      try {
-        const moduleRoutesPath = path.join(modulesPath, module, `routes.ts`);
-        console.log(moduleRoutesPath);
-        if (fs.existsSync(moduleRoutesPath)) {
-          const routeModuleUrl = `file://${moduleRoutesPath}`;
-          const routeModule = await import(routeModuleUrl);
-          const route = routeModule.default;
-          router.use(`/${module}`, route);
-          console.log(`✅ ${module} routes registered`);
-        } else {
-          throw new Error(`❎ Failed to load route from ${module}`);
-        }
-      } catch (error) {
-        console.error(error);
-        process.exit(1);
-      }
-    }
-  } catch (error) {
-    console.log(error);
-    process.exit(1);
-  }
-};
 
-registerRoutes();
 export default router;
+
+// FIle based
+
+// const registerRoutes = async () => {
+//   try {
+//     const modulesPath = path.join(__dirname, "modules");
+//     const modules = fs
+//       .readdirSync(modulesPath, { withFileTypes: true })
+//       .filter((dirent) => dirent.isDirectory())
+//       .map((dirent) => dirent.name);
+
+//     for (const module of modules) {
+//       try {
+//         const moduleRoutesPath = path.join(modulesPath, module, `routes.ts`);
+//         console.log(moduleRoutesPath);
+//         if (fs.existsSync(moduleRoutesPath)) {
+//           const routeModuleUrl = `file://${moduleRoutesPath}`;
+//           const routeModule = await import(routeModuleUrl);
+//           const route = routeModule.default;
+
+//           router.use(`/${module}`, route);
+
+//           console.log(`✅ ${module} routes registered`);
+//         } else {
+//           console.error(`❌ No route.ts found in  ${module}`);
+//         }
+//       } catch (error) {
+//         console.error(`❌ Failed to load route for ${module}`);
+//       }
+//     }
+//   } catch (error) {
+//     console.error(error);
+//     process.exit(1);
+//   }
+// };

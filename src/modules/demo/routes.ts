@@ -1,9 +1,17 @@
-import { Router } from "express";
+import { NextFunction, Request, Response } from "express";
+import { Controller, Get } from "../../decorator";
 
-const router = Router();
+@Controller("/demo")
+class DemoController {
+  @Get("/", (req: Request, res: Response, next: NextFunction) => {
+    console.log("Middleware 2");
+    next();
+  })
+  async index(req: Request, res: Response) {
+    // throw new Error("Hello World");
+    return res.json({ message: "Hello World" });
+  }
+}
 
-router.get("/", (req, res) => {
-  res.send("Hello, World!");
-});
 
-export default router;
+export default (DemoController as any).router;
