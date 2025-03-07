@@ -9,36 +9,13 @@ const EnvSchema = z.object({
       message: "DB_URL is required and must be a string",
     })
     .nonempty(),
-  DB_HOST: z
+  SERVER_PORT: z
     .string({
-      message: "DB_HOST is required and must be a string.Exm:localhost",
+      message: "Server Port is greater than 2000",
     })
-    .nonempty(),
-  DB_USER: z
-    .string({
-      message: "DB_USER is required and must be a string.Exm:root",
-    })
-    .nonempty(),
-  DB_PASSWORD: z
-    .string({
-      message: "DB_PASSWORD is required and must be a string",
-    })
-    .nonempty(),
-  DB_NAME: z
-    .string({
-      message: "DB_NAME is required and must be a string:e.g. mydb",
-    })
-    .nonempty(),
-  DB_PORT: z.coerce
-    .number({
-      message: "DB_PORT is required and must be a number.Ex:5432",
-    })
-    .int(),
-  PORT: z.coerce
-    .number({
-      message: "PORT is required and must be a number.Exm:3000",
-    })
-    .int({ message: "PORT must be an integer" }),
+    .refine((value) => {
+      return parseInt(value) > 2000;
+    }),
   JWT_SECRET_KEY: z
     .string({
       message: "JWT_SECRET_KEY is required and must be a string",
@@ -95,14 +72,13 @@ try {
   EnvSchema.parse(process.env);
 } catch (error: any) {
   if (error instanceof z.ZodError) {
-    error.errors.forEach((err) => {
+    for (const err of error.errors) {
       console.error(err.message);
-    });
+    }
   } else {
     console.error(error.errors);
+    process.exit(1);
   }
-
-  process.exit(1);
 }
 
 export default EnvSchema.parse(process.env);

@@ -9,7 +9,7 @@ import morgan from "morgan";
 import env from "./config/env";
 import limitter from "./config/rate-limitter";
 import { errorConverter, errorHandler } from "./middlewares/error";
-import routes from "./route";
+import routes from "./routes";
 import ApiError from "./utils/ApiError";
 // create an express app.
 const app = express();
@@ -45,7 +45,7 @@ app.disable("x-powered-by");
 // disabling the etag header.
 app.disable("etag");
 // serving static files.
-app.use(express.static("public"));
+// app.use(express.static("public"));
 
 app.use(limitter);
 
@@ -62,6 +62,6 @@ app.use(errorConverter);
 app.use(errorHandler);
 
 // start the server.
-server.listen(env.PORT, () => {
-  console.log(`Server is running on port ${env.PORT}`);
+server.listen(env.SERVER_PORT, () => {
+  console.log(`Server is running on port ${env.SERVER_PORT}`);
 });
