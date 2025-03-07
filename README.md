@@ -1,5 +1,7 @@
 # Express App Boiler plate
 
+Express App with Typescript,Drizzle,Zod,FakerJS
+
 ## Getting Started
 
 ###  1. Clone the Repository
