@@ -2,9 +2,12 @@
 
 Express App with Typescript,Drizzle,Zod,FakerJS
 
+There is simple controller that reduce always use router of express
+
 ## Getting Started
 
-###  1. Clone the Repository
+### 1. Clone the Repository
+
 Download the project to your local machine:
 
 ```
@@ -13,22 +16,29 @@ cd express-template
 ```
 
 ### 2. Install Dependencies
+
 Install the required Node.js packages:
+
 ```
 npm install
 ```
+
 ### 3. Configure Environment (Optional)
+
 If the project uses environment variables (e.g., for ports or API keys):
 
 Create a .env file in the root directory.
 
 ### Development Mode (Optional)
+
 For live reloading during development:
+
 ```
 npm run dev
 ```
 
 ## Project Structure
+
 Here’s a typical layout you might find in this template:
 
 ```
@@ -46,6 +56,7 @@ express-template/
 ├── package.json      # Project metadata and dependencies
 └── README.md         # This file
 ```
+
 ## Contributing
 
 Feel free to fork this repo, make improvements, and submit a pull request:
@@ -58,4 +69,5 @@ Feel free to fork this repo, make improvements, and submit a pull request:
 6. Open a pull request on the original repo.
 
 ## Contact
+
 Questions? Reach out to Aziz-Ru on GitHub or open an issue in this repository.

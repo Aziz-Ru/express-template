@@ -15,93 +15,37 @@ const catchAsync =
     Promise.resolve(fn(req, res, next)).catch((err) => next(err));
   };
 
-export function Get(
-  path: string,
-  ...middleware: ((req: Request, res: Response, next: NextFunction) => void)[]
-) {
+export function createMethodDecorator(method: RouteConfig["method"]) {
   return function (
-    target: any,
-    propertyKey: string,
-    descriptor: PropertyDescriptor
+    path: string = "",
+    ...middleware: ((req: Request, res: Response, next: NextFunction) => void)[]
   ) {
-    const routes: RouteConfig[] =
-      Reflect.getMetadata(ROUTE_METADATA, target.constructor) || [];
+    return function (
+      target: any,
+      propertyKey: string,
+      descriptor: PropertyDescriptor
+    ) {
+      const routes: RouteConfig[] =
+        Reflect.getMetadata(ROUTE_METADATA, target.constructor) || [];
 
-    routes.push({
-      path,
-      method: "get",
-      middleware,
-      handlerName: propertyKey,
-    });
-    Reflect.defineMetadata(ROUTE_METADATA, routes, target.constructor);
+      routes.push({
+        path,
+        method,
+        middleware,
+        handlerName: propertyKey,
+      });
+
+      Reflect.defineMetadata(ROUTE_METADATA, routes, target.constructor);
+    };
   };
 }
 
-export function Post(
-  path: string,
-  ...middleware: ((req: Request, res: Response, next: NextFunction) => void)[]
-) {
-  return function (
-    target: any,
-    propertyKey: string,
-    descriptor: PropertyDescriptor
-  ) {
-    const routes: RouteConfig[] =
-      Reflect.getMetadata(ROUTE_METADATA, target.constructor) || [];
-    routes.push({
-      path,
-      method: "post",
-      middleware,
-      handlerName: propertyKey,
-    });
-    Reflect.defineMetadata(ROUTE_METADATA, routes, target.constructor);
-  };
-}
-
-export function Put(
-  path: string,
-  ...middleware: ((req: Request, res: Response, next: NextFunction) => void)[]
-) {
-  return function (
-    target: any,
-    propertyKey: string,
-    descriptor: PropertyDescriptor
-  ) {
-    const routes: RouteConfig[] =
-      Reflect.getMetadata(ROUTE_METADATA, target.constructor) || [];
-    routes.push({
-      path,
-      method: "put",
-      middleware,
-      handlerName: propertyKey,
-    });
-    Reflect.defineMetadata(ROUTE_METADATA, routes, target.constructor);
-  };
-}
-
-export function Delete(
-  path: string,
-  ...middleware: ((req: Request, res: Response, next: NextFunction) => void)[]
-) {
-  return function (
-    target: any,
-    propertyKey: string,
-    descriptor: PropertyDescriptor
-  ) {
-    const routes: RouteConfig[] =
-      Reflect.getMetadata(ROUTE_METADATA, target.constructor) || [];
-    routes.push({
-      path,
-      method: "delete",
-      middleware,
-      handlerName: propertyKey,
-    });
-    Reflect.defineMetadata(ROUTE_METADATA, routes, target.constructor);
-  };
-}
+export const Get = createMethodDecorator("get");
+export const Post = createMethodDecorator("post");
+export const Put = createMethodDecorator("put");
+export const Delete = createMethodDecorator("delete");
 
 export function Controller(prefix: string = "") {
-  
   return function <T extends { new (...args: any[]): {} }>(constructor: T) {
     const router = Router();
     const routes: RouteConfig[] =
@@ -110,7 +54,7 @@ export function Controller(prefix: string = "") {
     const instance = new constructor();
 
     routes.forEach(({ path, method, middleware, handlerName }) => {
-      const fullPath = `${prefix}${path}`;
+      const fullPath = `/${prefix}/${path}`;
       const handler = (instance as any)[handlerName].bind(instance);
       (router as any)[method](fullPath, ...middleware, catchAsync(handler));
     });
