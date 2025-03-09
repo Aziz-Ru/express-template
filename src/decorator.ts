@@ -100,11 +100,10 @@ export function Delete(
   };
 }
 
-
 export function Controller(prefix: string = "") {
+  
   return function <T extends { new (...args: any[]): {} }>(constructor: T) {
     const router = Router();
-
     const routes: RouteConfig[] =
       Reflect.getMetadata(ROUTE_METADATA, constructor) || [];
 

@@ -1,10 +1,15 @@
 import { Router } from "express";
 import "reflect-metadata";
-import DemoController from "./modules/demo/routes";
+import { DemoController } from "./modules/demo";
 const router = Router();
 
-router.use(DemoController);
+// Register routes
 
+const controllers = [DemoController];
+
+controllers.forEach((controller) => {
+  router.use((controller as any).router);
+});
 
 export default router;
 
